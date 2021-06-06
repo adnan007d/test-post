@@ -1,5 +1,15 @@
-import axios from "axios";
+import { AxiosRequestConfig } from "axios";
+import axios from "../../axios";
+import store from "../app/store";
 import { IPost } from "../slices/postSlice";
+
+axios.interceptors.request.use((req: AxiosRequestConfig) => {
+  const token = store.getState().user.user?.idToken;
+  if (token) {
+    req.headers.authorization = `Bearer ${token}`;
+  }
+  return req;
+});
 
 const errorResponse = (error: any) => ({
   error: true,

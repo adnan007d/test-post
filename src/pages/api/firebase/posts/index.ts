@@ -12,6 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     description: postDoc.data().description,
     likeCount: postDoc.data().likeCount,
     id: postDoc.id,
+    user: postDoc.data().user,
   }));
 
   res.status(200).json(posts);

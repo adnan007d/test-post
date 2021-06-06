@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../app/store";
+import { IUser } from "./userSlice";
 
 export interface IPost {
   id?: string;
@@ -7,6 +8,7 @@ export interface IPost {
   description: string;
   likeCount?: number;
   timestamp?: number;
+  user?: IUser;
 }
 
 interface IInitialState {
@@ -27,7 +29,7 @@ const postsSlice = createSlice({
   initialState: initialState,
   reducers: {
     setPosts: (state, action: PayloadAction<IPost[]>) => {
-      state.posts = [...state.posts, ...action.payload];
+      state.posts = action.payload;
     },
     updatePosts: (state, action: PayloadAction<IPost>) => {
       state.posts = state.posts.map((post) =>

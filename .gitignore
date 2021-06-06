@@ -33,3 +33,4 @@ yarn-error.log*
 # vercel
 .vercel
 serviceAccountKey.pri.json
+firebaseConfig-pri.ts

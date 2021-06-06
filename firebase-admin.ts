@@ -15,4 +15,6 @@ const app = !admin.apps.length
 
 const db = app.firestore().collection("test-posts").doc("test-post");
 
-export { db };
+const adminAuth = app.auth();
+
+export { db, adminAuth };

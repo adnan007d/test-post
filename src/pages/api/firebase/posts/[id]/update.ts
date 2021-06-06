@@ -1,8 +1,14 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 import { db } from "../../../../../../firebase-admin";
+import withAuth, {
+  CustomNextApiRequest,
+} from "../../../../../authMiddleware/withAuth";
 import { IPost } from "../../../../../slices/postSlice";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const handler: any = async (
+  req: CustomNextApiRequest,
+  res: NextApiResponse
+) => {
   if (req.method !== "PATCH")
     return res.status(400).json({ message: "BAD REQUEST" });
 
@@ -14,6 +20,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   try {
     const postDoc = await db.collection("posts").doc(id).get();
+
+    if (req.user.uid !== postDoc.data()?.user.uid)
+      return res.status(401).json({ message: "UnAuthorized" });
+
     const updatePost = postDoc.ref.update({
       title: title.trim(),
       description: description.trim(),
@@ -28,7 +38,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       },
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).json({ message: "Something went wrong!!" });
   }
 };
+
+export default withAuth(handler);

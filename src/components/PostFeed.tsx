@@ -15,6 +15,7 @@ const PostFeed: FC = () => {
           title={post.title}
           description={post.description}
           likeCount={post.likeCount}
+          user={post.user}
         />
       ))}
     </div>

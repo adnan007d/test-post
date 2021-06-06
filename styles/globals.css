@@ -6,4 +6,8 @@
   .icon_button {
     @apply flex space-x-1 focus:outline-none active:bg-[rgba(255,255,255,0.1)] p-2 rounded-full;
   }
+
+  .btn {
+    @apply bg-gray-500 p-2 rounded-md focus:outline-none;
+  }
 }
